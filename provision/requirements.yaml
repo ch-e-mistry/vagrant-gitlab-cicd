@@ -1,0 +1,4 @@
+---
+#https://galaxy.ansible.com/docs/using/installing.html
+# from galaxy
+- src: geerlingguy.gitlab
