@@ -1,8 +1,14 @@
 - hosts: all,localhost
+  environment:
+    GITLAB_ROOT_PASSWORD: SecRetPassworD#2023!
   vars:
-    gitlab_domain: gitlab.example.com
+    gitlab_domain: "gitlab.devops.com" #TODO change to your domain
     gitlab_edition: "gitlab-ce"
-    gitlab_version: '13.6.1-ce.0'
+    gitlab_version: '16.6.7-ce.0' #TODO https://packages.gitlab.com/gitlab/gitlab-ce?filter=debs
+    gitlab_create_self_signed_cert: true
+    gitlab_self_signed_cert_subj: '/C=HU/ST=HajduBihar/L=Debrecen/O=DEVOPS/CN={{ gitlab_domain }}" -addext "subjectAltName = DNS:localhost,DNS:{{ gitlab_domain }}""'
+    gitlab_installation_async_time: 1500
   roles:
-    - role: geerlingguy.gitlab
+    - role: ch-e-mistry.gitlab
       become: yes
+ 
