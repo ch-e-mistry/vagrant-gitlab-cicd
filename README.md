@@ -1,101 +1,70 @@
+# GitLab CI/CD With Vagrant
 
-# gitlab CICD vagrant
+This repository contains Vagrant code designed to set up a local GitLab CI/CD environment, comprising two virtual machines:
 
-It is a **vagrant code** which:
+- A **GitLab VM** running on Ubuntu, with an IP address of **192.168.56.222**.
+- A **Runner VM** running on CentOS, with an IP address of **192.168.56.223**.
 
-- Brings up **Two Virtual Machine**:
-- 1 - **gitlab VM** (ubuntu). IP-Address: **192.168.56.222**
-- 2 - **runner VM** (centos). IP-Address: **192.168.56.223**
+The GitLab VM is configured using an Ansible playbook to install GitLab, while the Runner VM setup is facilitated through bash scripts.
 
-For gitlab VM, ansible playbook was used to install the server itself, while for runner mainly bash scripts are responsible for the installation.
+# Table of Contents
 
-# Table of contents
-
-- [gitlab CICD vagrant](#gitlab-cicd-vagrant)
-- [Table of contents](#table-of-contents)
+- [GitLab CI/CD With Vagrant](#gitlab-cicd-with-vagrant)
+- [Table of Contents](#table-of-contents)
   - [Requirements](#requirements)
-  - [Usage](#usage)
-    - [gitlab-runner](#gitlab-runner)
-  - [Limitations](#limitations)
-  - [License](#license)
-  - [Author Information](#author-information)
+  - [Usage Instructions](#usage-instructions)
+    - [Configuring the GitLab Runner](#configuring-the-gitlab-runner)
+  - [Known Limitations](#known-limitations)
+  - [License Information](#license-information)
+  - [About the Author](#about-the-author)
 
 ## Requirements
 
-**Vagrant binary** must to be installed on your machine.
+To utilize this setup, you must have the **Vagrant software installed** on your machine. Additionally, a **minimum of 8GB** of RAM is required, as the VMs collectively consume approximately **5120MB of memory**.
 
-Also at least 8GB memory is required, as VMs will use ~ **5120MB of memory**.
+The setup process typically takes around **25 minutes**, varying based on internet connection speed due to the necessity to download base boxes.
 
-It is **about ~ 25 mins to bring it up**, but it depends on your internet connection speed as well (download base-boxes).
+Should you encounter a timeout issue, as described below, you are advised to destroy the VMs using the `vagrant destroy` command, adjust the `config.vm.boot_timeout` value as needed, and then rerun `vagrant up`. Monitoring the VMs' boot process via the Oracle VirtualBox GUI can provide useful insights.
 
-If you face timeout problem like:
-
-``` bash
+```bash
 ...
-    gitlab: SSH username: vagrant
-    gitlab: SSH auth method: private key
-Timed out while waiting for the machine to boot. This means that
-Vagrant was unable to communicate with the guest machine within
-the configured ("config.vm.boot_timeout" value) time period.
-
-If you look above, you should be able to see the error(s) that
-Vagrant had when attempting to connect to the machine. These errors
-are usually good hints as to what may be wrong.
-
-If you're using a custom box, make sure that networking is properly
-working and you're able to connect to the machine. It is a common
+...
+...
 problem that networking isn't setup properly in these boxes.
 Verify that authentication configurations are also setup properly,
 as well.
 
 If the box appears to be booting properly, you may want to increase
 the timeout ("config.vm.boot_timeout") value.
+...
 ```
 
- * Destroy the created resources with `vagrant destroy` command and Increase the `config.vm.boot_timeout` value as recommended && exeecute `vagrant up` again. Also you can check Oracle VirtualBox GUI to see the progress.
+## Usage Instructions
 
-## Usage
-
-**You must to add `gitlab.devops.com` on you local hosts** (Windows - "c:\Windows\System32\drivers\etc\hosts") file to point to gitlab server's ip-address. Example:
+Firstly, ensure `gitlab.devops.com` is added to your local hosts file (Windows - "c:\Windows\System32\drivers\etc\hosts"; Linux / MacOS - "/etc/hosts"), pointing to the GitLab server's IP address, as illustrated below:
 
 ```bash
-# Copyright (c) 1993-2009 Microsoft Corp.
-
-#...
-
-# localhost name resolution is handled within DNS itself.
-# 127.0.0.1       localhost
-# ::1             localhost
 192.168.56.222   gitlab.devops.com
 ```
 
-**Clone** this repository and **change directory to it**.
+Proceed by cloning this repository and navigating to the cloned directory. Initiate the setup by executing `vagrant up`.
 
-After that please **execute `vagrant up`**.
+Upon completion, GitLab can be accessed via the IP address `192.168.56.222` or through `gitlab.devops.com` in your web browser.
 
-After vagrant was finished with creation of VMs and provisioning, you will be able to **reach gitlab with `192.168.56.222` ip-address** or via `gitlab.devops.com` in your browser.
+The default login credentials are as follows: username `admin@example.com` and password `SecRetPassworD#2023!`, as specified in the [gitlab.yaml](./provision/gitlab.yaml) configuration file.
 
-**Default username is `admin@example.com`**, password will be `SecRetPassworD#2023!`, as defined in [gitlab.yaml](./provision/gitlab.yaml).
+### Configuring the GitLab Runner
 
-### gitlab-runner
+To access the virtual machines, use `vagrant ssh <BOX_NAME>`, replacing `<BOX_NAME>` with either `gitlab` or `runner`. The GitLab Runner installation and registration are automated, adhering to the official GitLab documentation, thus manual installation or registration is unnecessary.
 
-You can SSH on the instances with `vagrant ssh <BOX_NAME>`, so `vagrant ssh gitlab` or `vagrant ssh runner`.
+## Known Limitations
 
-The automated installation of runner is based on following official documentations:
+This setup is intended for local development and testing. As such, it is important to be mindful of SSL certificate validation issues, as many applications will either notify the user of self-signed certificates or block execution entirely.
 
-- <https://docs.gitlab.com/15.11/runner/register/index.html#requirements>
-- <https://docs.gitlab.com/15.11/runner/register/index.html#linux>
+## License Information
 
-Please read them. The tasks, should be done on **gitlab-runner was automatized**, so you **do not need to install gitlab-runner or register it manually**!
+This project is licensed under the MIT License.
 
-## Limitations
+## About the Author
 
-Keep in mind, it is a local implementation. It means you should take care of **SSL certification issues in every term** (plugins, clone, git, ... most of the applications are notify you or block the execution in case of self-signed cert - as in our case)
-
-## License
-
-MIT
-
-## Author Information
-
-**Peter Mikaczo**  - <petermikaczo@gmail.com>
+**Peter Mikaczo** - <petermikaczo@gmail.com>
