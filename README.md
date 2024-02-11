@@ -1,5 +1,7 @@
 # GitLab CI/CD With Vagrant
 
+For Hunagrian version, please open [README_hun.md](README_hun.md)
+
 This repository contains Vagrant code designed to set up a local GitLab CI/CD environment, comprising two virtual machines:
 
 - A **GitLab VM** running on Ubuntu, with an IP address of **192.168.56.222**.
