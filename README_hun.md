@@ -1,4 +1,4 @@
-# GitLab CI/CD Vagranttel
+# GitLab CI/CD Vagranttal
 
 Ez a repository Vagrant kódot tartalmaz, amelynek célja egy helyi GitLab CI/CD környezet beállítása, amely két virtuális gépből áll:
 
@@ -7,10 +7,10 @@ Ez a repository Vagrant kódot tartalmaz, amelynek célja egy helyi GitLab CI/CD
 
 A GitLab VM konfigurálása egy Ansible playbook segítségével történik, a GitLab telepítéséhez, míg a Runner VM beállítása bash szkriptekkel van megkönnyítve.
 
-# Tartalomjegyzék
+## Tartalomjegyzék
 
-- [GitLab CI/CD Vagranttel](#gitlab-cicd-vagranttel)
-- [Tartalomjegyzék](#tartalomjegyzék)
+- [GitLab CI/CD Vagranttal](#gitlab-cicd-vagranttal)
+  - [Tartalomjegyzék](#tartalomjegyzék)
   - [Követelmények](#követelmények)
   - [Használati Utasítások](#használati-utasítások)
     - [A GitLab Runner Konfigurálása](#a-gitlab-runner-konfigurálása)

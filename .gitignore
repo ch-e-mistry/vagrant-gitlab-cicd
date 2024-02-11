@@ -1,2 +1,4 @@
 *.log
 .vagrant
+provision/config.toml
+provision/register_token
